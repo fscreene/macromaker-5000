@@ -1,7 +1,8 @@
 import React from "react";
 import { Modifiers } from "./modifiers";
-import { Pre, EditableText, Switch } from "@blueprintjs/core";
-import dark from "./MacroMaker.module.css";
+import { Pre, EditableText, Switch, Label } from "@blueprintjs/core";
+import styles from "./MacroMaker.module.scss";
+import classNames from "classnames";
 
 interface IState {
     modifiers: string[];
@@ -19,27 +20,32 @@ export class MacroMaker extends React.Component<{}, IState> {
     public render() {
         // document.body.className = this.state.darkMode ? "bp3-dark" : "bp3-body";
         const className = this.state.darkMode
-            ? "bp3-dark " + dark.dark + " " + dark.full
+            ? "bp3-dark " + styles.dark + " " + styles.full
             : "bp3-body";
         return (
-            <div className={className}>
-                <EditableText
-                    placeholder="Enter spell name"
-                    value={this.state.skillName}
-                    onChange={this.editSpellName}
-                />
-                <Modifiers
-                    onChangeModifiers={modifiers => {
-                        this.setState({ modifiers });
-                    }}
-                />
-                <Pre>{this.getFormatted()}</Pre>
+            <div className={classNames(className, styles.container)}>
+                <div className={styles.maker}>
+                    <EditableText
+                        placeholder="Enter spell name"
+                        value={this.state.skillName}
+                        onChange={this.editSpellName}
+                    />
+                    <Modifiers
+                        onChangeModifiers={modifiers => {
+                            this.setState({ modifiers });
+                        }}
+                    />
+                    <div>
+                        <Label>Your Macro</Label>
+                        <Pre>{this.getFormatted()}</Pre>
+                    </div>
 
-                <Switch
-                    checked={this.state.darkMode}
-                    label="Dark Mode"
-                    onChange={this.toggleDarkMode}
-                />
+                    <Switch
+                        checked={this.state.darkMode}
+                        label="Dark Mode"
+                        onChange={this.toggleDarkMode}
+                    />
+                </div>
             </div>
         );
     }

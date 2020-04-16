@@ -1,5 +1,6 @@
 import React from "react";
 import { Checkbox, Label } from "@blueprintjs/core";
+import styles from "./Modifiers.module.scss";
 
 // Some dynamic bind for these
 interface IState {
@@ -9,7 +10,9 @@ interface IState {
 const mods: { [key: string]: string } = {
     mouseover: "@mouseover",
     help: "help",
-    nodead: "nodead"
+    nodead: "nodead",
+    focus: "@focus",
+    harm: "harm"
 };
 
 export class Modifiers extends React.Component<
@@ -31,21 +34,23 @@ export class Modifiers extends React.Component<
 
     public render() {
         return (
-            <div>
+            <div className={styles.container}>
                 <Label>Cast modifiers</Label>
-                {Object.keys(this.state.mods).map(key => {
-                    const checked = (this.state.mods as {
-                        [key: string]: boolean;
-                    })[key];
-                    return (
-                        <Checkbox
-                            key={key}
-                            checked={checked}
-                            label={mods[key]}
-                            onChange={this.handleFlip(key)}
-                        />
-                    );
-                })}
+                {Object.keys(this.state.mods)
+                    .sort()
+                    .map(key => {
+                        const checked = (this.state.mods as {
+                            [key: string]: boolean;
+                        })[key];
+                        return (
+                            <Checkbox
+                                key={key}
+                                checked={checked}
+                                label={mods[key]}
+                                onChange={this.handleFlip(key)}
+                            />
+                        );
+                    })}
             </div>
         );
     }
