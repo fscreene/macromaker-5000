@@ -32,7 +32,7 @@ export class MacroMaker extends React.Component<{}, IState> {
     }
 
     private getFormatted = () => {
-        let value = "#showtooltip" + " " + this.state.skillName + "\n/cast";
+        let value = "#showtooltip " + this.state.skillName + "\n/cast";
         value += " " + this.getModifiers() + this.state.skillName;
         return value;
     };

@@ -23,7 +23,7 @@ export class Modifiers extends React.Component<
     constructor(props: { onChangeModifiers: (modifiers: string[]) => void }) {
         super(props);
         const parsedMods: { [key: string]: boolean } = {};
-        Object.keys(mods).map(key => {
+        Object.keys(mods).forEach(key => {
             parsedMods[key] = false;
         });
         this.state = { mods: parsedMods };
@@ -61,7 +61,7 @@ export class Modifiers extends React.Component<
                         if (!currentValue) {
                             return mods[key];
                         }
-                        return;
+                        return undefined;
                     }
                     if (
                         (this.state.mods as {
@@ -70,7 +70,7 @@ export class Modifiers extends React.Component<
                     ) {
                         return mods[k];
                     }
-                    return;
+                    return undefined;
                 })
                 .filter(v => v !== undefined) as string[];
             this.props.onChangeModifiers(changed);
