@@ -34,4 +34,4 @@ jobs:
                   username: ${{ secrets.USERNAME }}
                   password: ${{ secrets.PASSWORD }}
                   source: "build/*"
-                  target: "/var/www/macromaker-5000"
+                  target: "/var/www/macromaker-5000.com/html"
