@@ -10,7 +10,8 @@ import {
     Alignment,
     H3,
     Callout,
-    Intent
+    Intent,
+    Toaster
 } from "@blueprintjs/core";
 import styles from "./MacroMaker.module.scss";
 import classNames from "classnames";
@@ -21,7 +22,6 @@ interface IState {
     skillName: string;
     darkMode: boolean;
     selected: string;
-    copied: boolean;
 }
 
 const classes = [
@@ -69,13 +69,14 @@ const spells: { [key: string]: string[] } = {
     "death knight": []
 };
 
+const toaster = Toaster.create();
+
 export class MacroMaker extends React.Component<{}, IState> {
     public state = {
         modifiers: [],
         skillName: "",
         darkMode: false,
-        selected: "death knight",
-        copied: false
+        selected: "death knight"
     };
 
     private setSelected(selected: string) {
@@ -131,19 +132,30 @@ export class MacroMaker extends React.Component<{}, IState> {
                     </div>
                     <Modifiers
                         onChangeModifiers={modifiers => {
-                            this.setState({ modifiers, copied: false });
+                            this.setState({ modifiers });
                         }}
                     />
                     <div>
-                        <Label>Your Macro</Label>
-                        <Pre>{this.getFormatted()}</Pre>
+                        <div className={styles.center}>
+                            <div className={styles.output}>
+                                <Label>Your Macro</Label>
+                                <Pre>{this.getFormatted()}</Pre>
+                            </div>
+                        </div>
                         <CopyToClipboard
                             text={this.getFormatted()}
-                            onCopy={() => this.setState({ copied: true })}
+                            onCopy={() =>
+                                toaster.show({
+                                    message: "Macro copied to clipboard!",
+                                    intent: Intent.SUCCESS
+                                })
+                            }
                         >
                             <Button
+                                className={styles.copyButton}
+                                large={true}
                                 text={"Copy to clipboard"}
-                                disabled={this.state.copied}
+                                intent={Intent.PRIMARY}
                             />
                         </CopyToClipboard>
                     </div>
@@ -176,6 +188,6 @@ export class MacroMaker extends React.Component<{}, IState> {
     };
 
     private editSpellName = (newValue: string) => {
-        this.setState({ skillName: newValue, copied: false });
+        this.setState({ skillName: newValue });
     };
 }

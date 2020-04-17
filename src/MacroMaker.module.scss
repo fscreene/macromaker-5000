@@ -15,3 +15,17 @@
     width: 1280px;
     min-width: 1280px;
 }
+
+.output {
+    width: 600px;
+    text-align: left;
+}
+
+.center {
+    display: flex;
+    justify-content: space-around;
+}
+
+.copy {
+    width: 180px;
+}
