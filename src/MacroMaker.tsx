@@ -1,6 +1,16 @@
 import React from "react";
 import { Modifiers } from "./modifiers";
-import { Pre, EditableText, Switch, Label } from "@blueprintjs/core";
+import {
+    Pre,
+    EditableText,
+    Switch,
+    Label,
+    H1,
+    Navbar,
+    Button,
+    Alignment,
+    H3
+} from "@blueprintjs/core";
 import styles from "./MacroMaker.module.scss";
 import classNames from "classnames";
 
@@ -8,14 +18,65 @@ interface IState {
     modifiers: string[];
     skillName: string;
     darkMode: boolean;
+    selected: string;
 }
+
+const classes = [
+    "Warrior",
+    "Paladin",
+    "Hunter",
+    "Rogue",
+    "Priest",
+    "Shaman",
+    "Mage",
+    "Warlock",
+    "Monk",
+    "Druid",
+    "Demon Hunter",
+    "Death Knight"
+];
+
+const spells: { [key: string]: string[] } = {
+    paladin: [
+        "Blessing of Freedom",
+        "Bestow Faith",
+        "Redemption",
+        "Hand of Reckoning",
+        "Lay on Hands",
+        "Beacon of Faith",
+        "Holy Light",
+        "Holy Shock",
+        "Flash of Light",
+        "Beacon of Light",
+        "Cleanse",
+        "Blessing of Protection",
+        "Blessing of Sacrifice",
+        "Light of the Martyr"
+    ],
+    warrior: [],
+    hunter: [],
+    rogue: [],
+    priest: [],
+    shaman: [],
+    mage: [],
+    warlock: [],
+    monk: [],
+    druid: [],
+    "demon hunter": [],
+    "death knight": []
+};
 
 export class MacroMaker extends React.Component<{}, IState> {
     public state = {
         modifiers: [],
         skillName: "",
-        darkMode: false
+        darkMode: false,
+        selected: "death knight"
     };
+
+    private setSelected(selected: string) {
+        this.setState({ selected });
+    }
 
     public render() {
         // document.body.className = this.state.darkMode ? "bp3-dark" : "bp3-body";
@@ -25,11 +86,34 @@ export class MacroMaker extends React.Component<{}, IState> {
         return (
             <div className={classNames(className, styles.container)}>
                 <div className={styles.maker}>
-                    <EditableText
-                        placeholder="Enter spell name"
-                        value={this.state.skillName}
-                        onChange={this.editSpellName}
-                    />
+                    <H1>MACROMAKER 5000</H1>
+                    <Navbar>
+                        <Navbar.Group align={Alignment.LEFT}>
+                            <Navbar.Heading>Class</Navbar.Heading>
+                            <Navbar.Divider />
+                            {classes.sort().map(cl => (
+                                <Button
+                                    className="bp3-minimal"
+                                    // icon="home"
+                                    text={cl}
+                                    onClick={() =>
+                                        this.setSelected(cl.toLowerCase())
+                                    }
+                                />
+                            ))}
+                        </Navbar.Group>
+                    </Navbar>
+                    <div>
+                        <H3>Spells</H3>
+                        {spells[this.state.selected].sort().map(spell => (
+                            <Button
+                                className="bp3-minimal"
+                                // icon="home"
+                                text={spell}
+                                onClick={() => this.editSpellName(spell)}
+                            />
+                        ))}
+                    </div>
                     <Modifiers
                         onChangeModifiers={modifiers => {
                             this.setState({ modifiers });
