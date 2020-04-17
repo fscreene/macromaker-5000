@@ -2,7 +2,6 @@ import React from "react";
 import { Modifiers } from "./modifiers";
 import {
     Pre,
-    EditableText,
     Switch,
     Label,
     H1,
@@ -109,6 +108,7 @@ export class MacroMaker extends React.Component<{}, IState> {
                             <Button
                                 className="bp3-minimal"
                                 // icon="home"
+                                outlined={true}
                                 text={spell}
                                 onClick={() => this.editSpellName(spell)}
                             />
