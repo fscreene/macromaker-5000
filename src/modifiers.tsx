@@ -12,7 +12,20 @@ const mods: { [key: string]: string } = {
     help: "help",
     nodead: "nodead",
     focus: "@focus",
-    harm: "harm"
+    harm: "harm",
+    exists: "exists",
+    player: "@player",
+    cursor: "@cursor",
+    targettarget: "@targettarget",
+    pet: "@pet",
+    channeling: "channeling",
+    group: "group",
+    indoors: "indoors",
+    outdoors: "outdoors",
+    flyable: "flyable",
+    mounted: "mounted",
+    flying: "flying",
+    swimming: "swimming"
 };
 
 export class Modifiers extends React.Component<
