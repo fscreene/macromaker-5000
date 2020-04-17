@@ -29,3 +29,14 @@
 .copy {
     width: 180px;
 }
+
+.spells {
+    display: flex;
+    justify-content: center;
+}
+
+.chunk {
+    margin: 0px 5px;
+    display: flex;
+    flex-direction: column;
+}

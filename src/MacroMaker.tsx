@@ -16,6 +16,7 @@ import {
 import styles from "./MacroMaker.module.scss";
 import classNames from "classnames";
 import CopyToClipboard from "react-copy-to-clipboard";
+import { chunk } from "lodash";
 
 interface IState {
     modifiers: string[];
@@ -120,15 +121,28 @@ export class MacroMaker extends React.Component<{}, IState> {
                                 It's probably not worth playing
                             </Callout>
                         ) : null}
-                        {spells[this.state.selected].sort().map(spell => (
-                            <Button
-                                className="bp3-minimal"
-                                // icon="home"
-                                outlined={true}
-                                text={spell}
-                                onClick={() => this.editSpellName(spell)}
-                            />
-                        ))}
+                        <div className={styles.spells}>
+                            {chunk(
+                                spells[this.state.selected].sort(),
+                                Math.ceil(
+                                    spells[this.state.selected].length / 4
+                                )
+                            ).map(spellChunk => (
+                                <div className={styles.chunk}>
+                                    {spellChunk.map(spell => (
+                                        <Button
+                                            className="bp3-minimal"
+                                            // icon="home"
+                                            outlined={true}
+                                            text={spell}
+                                            onClick={() =>
+                                                this.editSpellName(spell)
+                                            }
+                                        />
+                                    ))}
+                                </div>
+                            ))}
+                        </div>
                     </div>
                     <Modifiers
                         onChangeModifiers={modifiers => {
