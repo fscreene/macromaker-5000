@@ -8,7 +8,9 @@ import {
     Navbar,
     Button,
     Alignment,
-    H3
+    H3,
+    Callout,
+    Intent
 } from "@blueprintjs/core";
 import styles from "./MacroMaker.module.scss";
 import classNames from "classnames";
@@ -107,6 +109,16 @@ export class MacroMaker extends React.Component<{}, IState> {
                     </Navbar>
                     <div>
                         <H3>Spells</H3>
+                        {spells[this.state.selected].length === 0 ? (
+                            <Callout
+                                intent={Intent.WARNING}
+                                title={
+                                    "No spells have been added for this class yet"
+                                }
+                            >
+                                It's probably not worth playing
+                            </Callout>
+                        ) : null}
                         {spells[this.state.selected].sort().map(spell => (
                             <Button
                                 className="bp3-minimal"
