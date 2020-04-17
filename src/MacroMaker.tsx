@@ -12,12 +12,14 @@ import {
 } from "@blueprintjs/core";
 import styles from "./MacroMaker.module.scss";
 import classNames from "classnames";
+import CopyToClipboard from "react-copy-to-clipboard";
 
 interface IState {
     modifiers: string[];
     skillName: string;
     darkMode: boolean;
     selected: string;
+    copied: boolean;
 }
 
 const classes = [
@@ -70,7 +72,8 @@ export class MacroMaker extends React.Component<{}, IState> {
         modifiers: [],
         skillName: "",
         darkMode: false,
-        selected: "death knight"
+        selected: "death knight",
+        copied: false
     };
 
     private setSelected(selected: string) {
@@ -116,12 +119,21 @@ export class MacroMaker extends React.Component<{}, IState> {
                     </div>
                     <Modifiers
                         onChangeModifiers={modifiers => {
-                            this.setState({ modifiers });
+                            this.setState({ modifiers, copied: false });
                         }}
                     />
                     <div>
                         <Label>Your Macro</Label>
                         <Pre>{this.getFormatted()}</Pre>
+                        <CopyToClipboard
+                            text={this.getFormatted()}
+                            onCopy={() => this.setState({ copied: true })}
+                        >
+                            <Button
+                                text={"Copy to clipboard"}
+                                disabled={this.state.copied}
+                            />
+                        </CopyToClipboard>
                     </div>
 
                     <Switch
@@ -152,6 +164,6 @@ export class MacroMaker extends React.Component<{}, IState> {
     };
 
     private editSpellName = (newValue: string) => {
-        this.setState({ skillName: newValue });
+        this.setState({ skillName: newValue, copied: false });
     };
 }
